@@ -1,8 +1,11 @@
-import React from 'react'
 import { AppBar, Container, MenuItem, Select, Toolbar, Typography } from '@mui/material'
 import { Link } from 'react-router-dom'
+import { CryptoState } from '../../CryptoContext'
 
 const Header = () => {
+
+  const {currency, setCurrency} = CryptoState();
+
   return (
     <AppBar color='transparent' position="static">
       <Container>
@@ -13,11 +16,12 @@ const Header = () => {
           <Link to='/'><Typography style={{
             fontSize: 30,
             fontWeight: 500,
-            fontFamily: 'montserrat'
-          }}>CryptoView</Typography></Link>
+            fontFamily: 'Montserrat'
+          }}>CoinView</Typography></Link>
           <Select
             variant='outlined'
-            value={'USD'}
+            value={currency}
+            onChange={e => setCurrency(e.target.value)}
             style={{
               width: 100,
               height: 40,
