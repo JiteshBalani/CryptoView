@@ -15,9 +15,9 @@ const Header = () => {
         }}>
           <Link to='/'><Typography style={{
             fontSize: 30,
-            fontWeight: 500,
+            fontWeight: 600,
             fontFamily: 'Montserrat'
-          }}>CoinView</Typography></Link>
+          }}>Coin View</Typography></Link>
           <Select
             variant='outlined'
             value={currency}

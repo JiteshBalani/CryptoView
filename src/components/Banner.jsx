@@ -26,32 +26,34 @@ const BannerContent = styled('div')({
 });
 
 const CoinView = styled('div')({
-    fontWeight: '500',
+    fontWeight: '600',
     fontFamily: 'Montserrat',
-    color: 'blueviolet',
-    fontSize: '70px',
+    fontSize: '60px',
 });
 
 const TagLine = styled('div')({
     fontFamily: 'Montserrat',
-    fontSize: '16px',
+    fontSize: '15px',
+    fontWeight: '600',
+    color: '#8A92B2',
+    textAlign: 'center',
 });
 
 const Banner = () => {
     return (
-            <BannerContainer>
-                <BannerContent>
-                    <CoinView>
-                        CoinView
-                    </CoinView>
-                    <TagLine>
+        <BannerContainer>
+            <BannerContent>
+                <CoinView>
+                    Coin View
+                </CoinView>
+                <TagLine>
                     Stay on top of the crypto game with ease.
-                    </TagLine>
-                </BannerContent>
-      <Carousel/>
+                </TagLine>
+            </BannerContent>
+            <Carousel />
 
 
-            </BannerContainer>
+        </BannerContainer>
     )
 }
 
