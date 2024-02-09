@@ -1,6 +1,8 @@
 import React from 'react'
 import { styled } from '@mui/system';
 import Carousel from './Carousel';
+import TrackChangesIcon from '@mui/icons-material/TrackChanges';
+
 
 
 const BannerContainer = styled('div')({
@@ -28,7 +30,9 @@ const BannerContent = styled('div')({
 const CoinView = styled('div')({
     fontWeight: '600',
     fontFamily: 'Montserrat',
-    fontSize: '60px',
+    fontSize: '50px',
+    display: 'flex',
+    alignItems: 'center',
 });
 
 const TagLine = styled('div')({
@@ -44,7 +48,8 @@ const Banner = () => {
         <BannerContainer>
             <BannerContent>
                 <CoinView>
-                    Coin View
+                    <TrackChangesIcon style={{ fontSize: '50px' }} />
+                    CoinView
                 </CoinView>
                 <TagLine>
                     Stay on top of the crypto game with ease.

@@ -1,6 +1,7 @@
 import { AppBar, Container, MenuItem, Select, Toolbar, Typography } from '@mui/material'
 import { Link } from 'react-router-dom'
 import { CryptoState } from '../../CryptoContext'
+import TrackChangesIcon from '@mui/icons-material/TrackChanges';
 
 const Header = () => {
 
@@ -15,9 +16,11 @@ const Header = () => {
         }}>
           <Link to='/'><Typography style={{
             fontSize: 30,
-            fontWeight: 600,
-            fontFamily: 'Montserrat'
-          }}>Coin View</Typography></Link>
+            fontWeight: 500,
+            fontFamily: 'Poppins',
+            display: 'flex',
+            alignItems: 'center',
+          }}><TrackChangesIcon style={{fontSize: 40}}/>CoinView</Typography></Link>
           <Select
             variant='outlined'
             value={currency}
