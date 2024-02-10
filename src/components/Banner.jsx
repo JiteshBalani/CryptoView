@@ -48,7 +48,7 @@ const Banner = () => {
         <BannerContainer>
             <BannerContent>
                 <CoinView>
-                    <TrackChangesIcon style={{ fontSize: '50px' }} />
+                    <TrackChangesIcon style={{ fontSize: '70px' }} />
                     CoinView
                 </CoinView>
                 <TagLine>
