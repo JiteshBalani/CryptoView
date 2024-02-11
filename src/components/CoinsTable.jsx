@@ -37,13 +37,13 @@ const CoinsTable = () => {
             <TextField id="outlined-basic" label="Search for a Coin" fullWidth variant="outlined"
                 onChange={(e) => setSearch(e.target.value)} />
 
-            <TableContainer style={{ marginTop: '1rem', marginBottom: '1rem' }}>
-                {loading ? (<LinearProgress style={{ backgroundColor: 'lightpink', }} />) :
-                    <Table>
+            <TableContainer sx={{ marginTop: '1rem', marginBottom: '1rem' }}>
+                {loading ? (<LinearProgress sx={{ backgroundColor: 'lightpink', }} />) :
+                    <Table aria-label="simple table" sx={{ borderCollapse: 'collapse' }}>
                         <TableHead style={{ backgroundColor: 'deeppink' }}>
                             <TableRow>
                                 {["Coins", 'Price', '24H %Change', 'Market Cap'].map((head) => (
-                                    <TableCell style={{ color: 'white', fontWeight: '700', fontFamily: 'Montserrat' }}
+                                    <TableCell sx={{ color: 'white', fontWeight: '700', fontFamily: 'Montserrat' }}
                                         key={head}
                                         align={head === "Coins" ? "" : "right"}
                                     >{head}</TableCell>
@@ -52,22 +52,24 @@ const CoinsTable = () => {
                         </TableHead>
                         <TableBody>
                             {handleSearch().slice((page - 1) * 10, (page - 1) * 10 + 10).map((coin) => {
-                                const profit = coin.price_change_percentage_24h > 0;
+                                const profit = coin?.price_change_percentage_24h > 0;
                                 return (
                                     <TableRow key={coin.id}
-                                        style={{
+                                        sx={{
                                             backgroundColor: "#16171a",
-                                            padding: 1,
                                             cursor: "pointer",
                                             "&:hover": {
                                                 backgroundColor: "#131111",
                                             },
                                             fontFamily: "Montserrat",
+                                            borderCollapse: 'collapse',
+                                            minHeight: 94
                                         }}
-                                        onClick={() => window.location.href = `/coins/${coin.id}`}
+                                        onClick={() => window.location.href = `/coins/${coin?.id}`}
                                     >
-                                        <TableCell component='th' scope='coin'
-                                            style={{
+                                        <TableCell component='th' 
+                                            scope='row'
+                                            sx={{
                                                 display: 'flex',
                                                 gap: 15,
                                             }}
@@ -75,19 +77,19 @@ const CoinsTable = () => {
                                             <img src={coin?.image} alt={coin.name} height='50'
                                                 style={{ marginBottom: 10 }} />
                                             <div style={{ display: 'flex', flexDirection: 'column' }}>
-                                                <span style={{ color: 'white', textTransform: 'uppercase', fontSize: 22 }}>{coin.symbol}</span>
-                                                <span style={{ color: 'darkgrey' }}>{coin.name}</span>
+                                                <span style={{ color: 'white', textTransform: 'uppercase', fontSize: 22 }}>{coin?.symbol}</span>
+                                                <span style={{ color: 'darkgrey' }}>{coin?.name}</span>
                                             </div>
                                         </TableCell>
 
-                                        <TableCell align='right'>{symbol} {numberWithCommas(coin.current_price.toFixed(2))}</TableCell>
+                                        <TableCell align='right'>{symbol} {numberWithCommas(coin?.current_price.toFixed(2))}</TableCell>
 
-                                        <TableCell align='right' style={{ color: profit > 0 ? 'rgb(14,203,129)' : 'red', fontWeight: 500 }}>
-                                            {profit && '+'}{coin.price_change_percentage_24h.toFixed(2)}%
+                                        <TableCell align='right' sx={{ color: profit > 0 ? 'rgb(14,203,129)' : 'red', fontWeight: 500 }}>
+                                            {profit && '+'}{coin?.price_change_percentage_24h?.toFixed(2)}%
                                         </TableCell>
 
                                         <TableCell align='right'>
-                                            {symbol} {numberWithCommas(coin.market_cap.toString().slice(0, -6))}M
+                                            {symbol} {numberWithCommas(coin?.market_cap?.toString().slice(0, -6))}M
                                         </TableCell>
 
                                     </TableRow>
@@ -98,8 +100,8 @@ const CoinsTable = () => {
                 }
 
             </TableContainer>
-            <Pagination color='deeppink'
-                style={{
+            <Pagination color='secondary' variant='outlined'
+                sx={{
                     display: 'flex',
                     justifyContent: 'center',
                     padding: 20,
