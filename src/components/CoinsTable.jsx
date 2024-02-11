@@ -39,7 +39,7 @@ const CoinsTable = () => {
 
             <TableContainer sx={{ marginTop: '1rem', marginBottom: '1rem' }}>
                 {loading ? (<LinearProgress sx={{ backgroundColor: 'lightpink', }} />) :
-                    <Table aria-label="simple table" sx={{ borderCollapse: 'collapse' }}>
+                    <Table aria-label="simple table" >
                         <TableHead style={{ backgroundColor: 'deeppink' }}>
                             <TableRow>
                                 {["Coins", 'Price', '24H %Change', 'Market Cap'].map((head) => (
@@ -62,20 +62,16 @@ const CoinsTable = () => {
                                                 backgroundColor: "#131111",
                                             },
                                             fontFamily: "Montserrat",
-                                            borderCollapse: 'collapse',
-                                            minHeight: 94
                                         }}
                                         onClick={() => window.location.href = `/coins/${coin?.id}`}
                                     >
-                                        <TableCell component='th' 
-                                            scope='row'
-                                            sx={{
+                                        <TableCell component='th' scope='coin'
+                                            style={{
                                                 display: 'flex',
                                                 gap: 15,
                                             }}
                                         >
-                                            <img src={coin?.image} alt={coin.name} height='50'
-                                                style={{ marginBottom: 10 }} />
+                                            <img src={coin?.image} alt={coin?.name} height='50'/>
                                             <div style={{ display: 'flex', flexDirection: 'column' }}>
                                                 <span style={{ color: 'white', textTransform: 'uppercase', fontSize: 22 }}>{coin?.symbol}</span>
                                                 <span style={{ color: 'darkgrey' }}>{coin?.name}</span>
