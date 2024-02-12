@@ -5,6 +5,9 @@ import axios from 'axios';
 import { CoinList } from '../utils/api';
 
 export const numberWithCommas = (x) => {
+    if (x === null || x === undefined) {
+        return 'N/A'; // or any other default value or behavior you prefer
+      }
     return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
 
@@ -96,11 +99,12 @@ const CoinsTable = () => {
                 }
 
             </TableContainer>
-            <Pagination color='secondary' variant='outlined'
+            <Pagination color='secondary' variant='outlined' size='large'
                 sx={{
                     display: 'flex',
                     justifyContent: 'center',
                     padding: 20,
+                    paddingTop: 5,
                     width: '100%',
                 }}
                 count={(handleSearch()?.length / 10).toFixed(0)}
