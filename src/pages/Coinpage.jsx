@@ -4,8 +4,9 @@ import { CryptoState } from '../../CryptoContext';
 import axios from 'axios';
 import { SingleCoin } from '../utils/api';
 import CoinInfo from '../components/CoinInfo';
-import { styled } from '@mui/material';
+import { LinearProgress, styled } from '@mui/material';
 import { numberWithCommas } from '../components/CoinsTable';
+import HTMLReactParser from 'html-react-parser';
 
 const Coinpage = () => {
   const { id } = useParams();
@@ -41,7 +42,7 @@ const Coinpage = () => {
     borderRight: '2px solid grey',
   }));
 
-  const Description = styled('subtitle1')(({ theme }) => ({
+  const Description = styled('div')(({ theme }) => ({
     width: "100%",
     fontFamily: "Montserrat",
     padding: 25,
@@ -68,8 +69,9 @@ const Coinpage = () => {
     },
   }));
 
+  if (!coin) return <LinearProgress sx={{ backgroundColor: 'lightpink', }} />;
   return (
-    <>
+    <div>
       <SidebarComp>
         <Sidebar>
           <img
@@ -85,7 +87,7 @@ const Coinpage = () => {
           }}>
             {coin?.name}
           </span>
-          <Description> {coin?.description.en.split(". ")[0]}.</Description>
+          <Description> {HTMLReactParser(coin?.description.en.split(". ")[0])}.</Description>
           <MarketData>
             <div style={{
               display: "flex",
@@ -123,10 +125,10 @@ const Coinpage = () => {
           </MarketData>
         </Sidebar>
 
+      <CoinInfo coin={coin} />
       </SidebarComp>
       {/* Chart  */}
-      <CoinInfo coin={coin} />
-    </>
+    </div>
   )
 }
 

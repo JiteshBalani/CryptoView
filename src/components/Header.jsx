@@ -20,7 +20,7 @@ const Header = () => {
             fontFamily: 'Poppins',
             display: 'flex',
             alignItems: 'center',
-          }}><TrackChangesIcon style={{fontSize: 50}}/>CoinView</Typography></Link>
+          }}><TrackChangesIcon style={{fontSize: 50}}/>CoinFinity</Typography></Link>
           <Select
             variant='outlined'
             value={currency}

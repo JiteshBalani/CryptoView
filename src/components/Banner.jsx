@@ -49,7 +49,7 @@ const Banner = () => {
             <BannerContent>
                 <CoinView>
                     <TrackChangesIcon style={{ fontSize: '70px' }} />
-                    CoinView
+                    CoinFinity
                 </CoinView>
                 <TagLine>
                     Stay on top of the crypto game with ease.
