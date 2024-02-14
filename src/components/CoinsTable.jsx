@@ -3,6 +3,7 @@ import React from 'react'
 import { CryptoState } from '../../CryptoContext';
 import axios from 'axios';
 import { CoinList } from '../utils/api';
+import { useNavigate } from 'react-router-dom';
 
 export const numberWithCommas = (x) => {
     if (x === null || x === undefined) {
@@ -28,6 +29,8 @@ const CoinsTable = () => {
     React.useEffect(() => {
         fetchCoinTable()
     }, [currency]);
+
+    const history = useNavigate();
 
     const handleSearch = () => {
         return coinTable.filter((coin) => coin.name.toLowerCase().includes(search) ||
@@ -65,7 +68,7 @@ const CoinsTable = () => {
                                             },
                                             fontFamily: "Montserrat",
                                         }}
-                                        onClick={() => window.location.href = `/coins/${coin?.id}`}
+                                        onClick={() => history.push(`/coins/${coin.id}`)}
                                     >
                                         <TableCell component='th' scope='coin'
                                             style={{
