@@ -30,7 +30,7 @@ const CoinsTable = () => {
         fetchCoinTable()
     }, [currency]);
 
-    const history = useNavigate();
+    const navigate = useNavigate();
 
     const handleSearch = () => {
         return coinTable.filter((coin) => coin.name.toLowerCase().includes(search) ||
@@ -68,7 +68,7 @@ const CoinsTable = () => {
                                             },
                                             fontFamily: "Montserrat",
                                         }}
-                                        onClick={() => history.push(`/coins/${coin.id}`)}
+                                        onClick={() => navigate(`/coins/${coin.id}`)}
                                     >
                                         <TableCell component='th' scope='coin'
                                             style={{
