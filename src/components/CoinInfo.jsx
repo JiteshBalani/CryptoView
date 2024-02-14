@@ -1,20 +1,40 @@
 import React, { useEffect, useState } from 'react'
 import { CryptoState } from '../../CryptoContext';
-import { CircularProgress, styled } from '@mui/material';
+import { CircularProgress, ThemeProvider, createTheme, styled } from '@mui/material';
 import { Line } from 'react-chartjs-2';
+import {
+  Chart as ChartJS,
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+  Title,
+  Tooltip,
+  Legend,
+} from 'chart.js';
 import { HistoricalChart } from '../utils/api';
 import axios from 'axios';
 import { chartDays } from '../utils/data';
 import SelectButton from './SelectButton';
 
+ChartJS.register(
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+  Title,
+  Tooltip,
+  Legend
+);
+
 const CoinInfo = ({ coin }) => {
   const [historicalData, setHistoricalData] = useState([]);
   const [days, setDays] = useState(1);
-  const { currency, symbol } = CryptoState();
   const [flag, setFlag] = useState(false);
+  const { currency, symbol } = CryptoState();
 
   const ChartContainer = styled('div')(({ theme }) => ({
-    width: "75%",
+    width: "70%",
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
@@ -29,19 +49,48 @@ const CoinInfo = ({ coin }) => {
     },
   }));
 
+  const darkTheme = createTheme({
+    palette: {
+    primary:{
+      main: '#fff',
+    },
+    type: 'dark',
+  },
+  });
+
   const fetchChartData = async () => {
-      const {data} = await axios.get(HistoricalChart(coin.id, days, currency));
+      const { data } = await axios.get(HistoricalChart(coin.id, days, currency));
       setFlag(true);
       setHistoricalData(data.prices);
   };
 
   useEffect(() => {
     fetchChartData();
-  }, [days]);
+  }, [days, currency]);
+
+  const myData = {
+    labels: historicalData.map((coin)=>{
+     const date = new Date(coin[0])
+     const time = 
+     date.getHours() > 12 
+     ? `${date.getHours() -12}:${date.getMinutes()}PM` 
+     : `${date.getHours()}:${date.getMinutes()}AM`
+      return days === 1 ? time : date.toLocaleDateString() 
+    }), 
+    datasets:[
+        {
+            data: historicalData.map((coin)=>coin[1]),
+            label: ` Price in Past Days ${days} in ${currency} `,
+            borderColor: 'purple',
+        }
+    ]
+    
+  }
+  
 
   return (
+    <ThemeProvider theme={darkTheme}>
     <ChartContainer>
-      <div>
         {!historicalData || flag === false ? (
           <CircularProgress
             style={{ color: "deeppink" }}
@@ -49,32 +98,14 @@ const CoinInfo = ({ coin }) => {
             thickness={1} />
         ) : (
           <>
-            <Line
-              data={{
-                labels: historicalData.map((coin) => {
-                  let date = new Date(coin[0]);
-                  let time =
-                    date.getHours() > 12
-                      ? `${date.getHours() - 12}:${date.getMinutes()} PM`
-                      : `${date.getHours()}:${date.getMinutes()} AM`;
-                  return days === 1 ? time : date.toLocaleDateString();
-                }),
-                datasets: [
-                  {
-                    data: historicalData.map((coin) => coin[1]),
-                    label: `Price ( Past ${days} Days ) in ${currency}`,
-                    borderColor: "deeppink",
-                  },
-                ],
-              }}
-              options={{
-                elements: {
-                  point: {
-                    radius: 1,
-                  },
-                },
-              }}
-            />
+          <Line data={myData} 
+          options={{
+          elements:{
+              point:{
+                  radius:1, 
+              }
+          }
+        }}/>
             <div
               style={{
                 display: "flex",
@@ -98,9 +129,8 @@ const CoinInfo = ({ coin }) => {
           </>
         )
         }
-      </div>
-
     </ChartContainer>
+    </ThemeProvider>
   )
 }
 

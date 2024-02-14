@@ -1,4 +1,4 @@
-import { TableContainer, Table, TableHead, TableRow, TableCell, TableBody, TextField, LinearProgress, Pagination } from '@mui/material'
+import { TableContainer, Table, TableHead, TableRow, TableCell, TableBody, TextField, LinearProgress, Pagination, createTheme, ThemeProvider, Paper } from '@mui/material'
 import React from 'react'
 import { CryptoState } from '../../CryptoContext';
 import axios from 'axios';
@@ -35,13 +35,12 @@ const CoinsTable = () => {
         );
     };
 
-    return (
-        <>
+    return (<>
             <TextField id="outlined-basic" label="Search for a Coin" fullWidth variant="outlined"
                 onChange={(e) => setSearch(e.target.value)} />
 
-            <TableContainer sx={{ marginTop: '1rem', marginBottom: '1rem' }}>
-                {loading ? (<LinearProgress sx={{ backgroundColor: 'lightpink', }} />) :
+            <TableContainer component={Paper} sx={{ marginTop: '1rem', marginBottom: '1rem' }}>
+                {loading ? (<LinearProgress sx={{ backgroundColor: 'lightpink', }} />) : (
                     <Table aria-label="simple table" >
                         <TableHead style={{ backgroundColor: 'deeppink' }}>
                             <TableRow>
@@ -71,11 +70,12 @@ const CoinsTable = () => {
                                         <TableCell component='th' scope='coin'
                                             style={{
                                                 display: 'flex',
+                                                alignItems: 'center',
                                                 gap: 15,
                                             }}
                                         >
-                                            <img src={coin?.image} alt={coin?.name} height='50'/>
-                                            <div style={{ display: 'flex', flexDirection: 'column' }}>
+                                            <img src={coin?.image} alt={coin?.name} width='50' height='50' />
+                                            <div style={{ display: 'flex', flexDirection: 'column', justifyContent: "space-between" }}>
                                                 <span style={{ color: 'white', textTransform: 'uppercase', fontSize: 22 }}>{coin?.symbol}</span>
                                                 <span style={{ color: 'darkgrey' }}>{coin?.name}</span>
                                             </div>
@@ -96,6 +96,7 @@ const CoinsTable = () => {
                             })}
                         </TableBody>
                     </Table>
+                    )
                 }
 
             </TableContainer>
