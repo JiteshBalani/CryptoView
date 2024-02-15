@@ -81,7 +81,7 @@ const CoinInfo = ({ coin }) => {
         {
             data: historicalData.map((coin)=>coin[1]),
             label: ` Price in Past Days ${days} in ${currency} `,
-            borderColor: 'purple',
+            borderColor: 'burlywood',
         }
     ]
     
