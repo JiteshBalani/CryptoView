@@ -103,12 +103,13 @@ const CoinsTable = () => {
                 }
 
             </TableContainer>
-            <Pagination color='secondary' variant='outlined' size='large'
+            <Pagination color='secondary' variant='outlined' size='medium'
                 sx={{
                     display: 'flex',
                     justifyContent: 'center',
-                    padding: 20,
+                    // padding: 20,
                     paddingTop: 5,
+                    paddingBottom: 5,
                     width: '100%',
                 }}
                 count={(handleSearch()?.length / 10).toFixed(0)}
