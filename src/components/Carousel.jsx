@@ -24,22 +24,67 @@ const CarouselItem = styled('div')({
   color: "white",
 });
 
+// Cache object to store trending coins data
+const trendingCache = {
+  data: null,
+  timestamp: null,
+  currency: null
+};
 
+// Time in milliseconds to refresh cache (15 minutes)
+const CACHE_DURATION = 15 * 60 * 1000;
 
 const Carousel = () => {
   const [trending, setTrending] = React.useState([]);
 
   const { currency, symbol } = CryptoState();
 
-  const carouselData = async () => {
-    const { data } = await axios.get(TrendingCoins(currency));
-    console.log(data);
-    setTrending(data);
-  };
+  const fetchTrendingData = React.useCallback(async () => {
+    const currentTime = Date.now();
+    const shouldUseCache = 
+      trendingCache.data && 
+      trendingCache.currency === currency && 
+      trendingCache.timestamp && 
+      (currentTime - trendingCache.timestamp < CACHE_DURATION);
+    
+    if (shouldUseCache) {
+      console.log("Using cached trending data");
+      setTrending(trendingCache.data);
+      return;
+    }
+    
+    try {
+      console.log("Fetching fresh trending data from API");
+      const { data } = await axios.get(TrendingCoins(currency));
+      
+      // Update the cache
+      trendingCache.data = data;
+      trendingCache.timestamp = currentTime;
+      trendingCache.currency = currency;
+      
+      setTrending(data);
+    } catch (error) {
+      console.error("Error fetching trending coins:", error);
+      // If there's an error but we have cached data, use it even if it's old
+      if (trendingCache.data) {
+        setTrending(trendingCache.data);
+      }
+    }
+  }, [currency]);
 
   React.useEffect(() => {
-    carouselData();
-  }, [currency]);
+    fetchTrendingData();
+    
+    // Optional: Set up a timer to refresh data periodically
+    const intervalId = setInterval(() => {
+      // Only refresh if the data is stale
+      if (Date.now() - trendingCache.timestamp >= CACHE_DURATION) {
+        fetchTrendingData();
+      }
+    }, CACHE_DURATION);
+    
+    return () => clearInterval(intervalId);
+  }, [currency, fetchTrendingData]);
 
   const items = trending.map((coin) => {
     let profit = coin?.price_change_percentage_24h >= 0;
