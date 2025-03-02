@@ -28,7 +28,6 @@ A cryptocurrency tracking web application built with **Vite + React**. It provid
 
 ```bash
 git clone https://github.com/JiteshBalani/CryptoView.git
-cd cryptoview
 ```
 
 ### 2️⃣ Install dependencies 
